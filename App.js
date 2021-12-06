@@ -11,6 +11,7 @@ export default function App() {
     const random = Math.ceil(Math.random()*1000);
     console.log(tasks);
     setTasks([...tasks, {id:random, description: textValue, completed: false} ])
+    setTextValue("")
     //console.log(random)
   }
 
@@ -23,7 +24,7 @@ export default function App() {
 
   const [textValue, setTextValue] = useState("")
   const [tasks, setTasks] = useState([
-    {id:1, description: "First task", completed: false},
+    {id:1, description: "First task", completed: false },
     {id:2,  description: "Second task", completed: false}
   ]) 
 
