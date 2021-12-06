@@ -5,27 +5,42 @@ import {useFonts} from 'expo-font'
 import TaskList from './components/TaskList';
 
 export default function App() {
+
+  const addTodo = () =>{
+    if (textValue ==="") return
+    const random = Math.ceil(Math.random()*1000);
+    console.log(tasks);
+    setTasks([...tasks, {id:random, description: textValue, completed: false} ])
+    //console.log(random)
+  }
+
+  const deleteTodo = (element) => {
+    const newTasks = tasks.filter(el => el.id !== element)
+    setTasks(newTasks)
+    console.log(element)
+  }
   
 
   const [textValue, setTextValue] = useState("")
   const [tasks, setTasks] = useState([
-    {id:1, description: "First task"},
-    {id:2,  description: "Second task"}
+    {id:1, description: "First task", completed: false},
+    {id:2,  description: "Second task", completed: false}
   ]) 
 
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
+     <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#779bdc" translucent = {true}/>
+
       <Text style={styles.title}>Todos</Text>
       
       <View style={styles.formContainer}>
         <TextInput style={styles.input} value={textValue} onChangeText={e=> setTextValue(e)}/>
-        <TouchableOpacity style={styles.button}><Text>Add</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={addTodo}><Text style={styles.white}>Add</Text></TouchableOpacity>
       </View>
 
       <ScrollView>
-        <TaskList tasks={tasks}/>
+        <TaskList tasks={tasks} deleteTodo={deleteTodo}/>
       </ScrollView>
       
     </View>
@@ -36,10 +51,11 @@ const styles = StyleSheet.create({
   title:{
     fontSize: 22,
     fontWeight:'bold',
-    marginTop: 50,
+    marginTop:36,
     textAlign:'center',
     padding: 10,
-    backgroundColor: '#abc'
+    backgroundColor: '#6564db',
+    color:'#fff'
   },
 
   container: {
@@ -58,14 +74,17 @@ const styles = StyleSheet.create({
     flex:2,
     height: '100%',
     borderWidth:1,
-    borderColor:'#abc',
+    borderColor:'#6564db',
     fontSize:18,
   },
   button:{
     flex:1,
-    backgroundColor:'#abc',
+    backgroundColor:'#6564db',
     justifyContent:'center',
     alignItems:'center',
-    height:'100%'
+    height:'100%',
+  },
+  white:{
+    color:'#fff'
   }
 });
